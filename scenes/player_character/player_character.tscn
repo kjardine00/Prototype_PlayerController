@@ -1,0 +1,56 @@
+[gd_scene load_steps=10 format=3 uid="uid://coxur0x6cemiu"]
+
+[ext_resource type="Script" path="res://scripts/player_character.gd" id="1_ebyub"]
+[ext_resource type="Texture2D" uid="uid://br486g1k8x0wn" path="res://icon.svg" id="1_vboyc"]
+[ext_resource type="Script" path="res://scripts/state_machine/state_machine.gd" id="3_ktvyv"]
+[ext_resource type="Script" path="res://scripts/state_machine/states/idle.gd" id="4_isyw2"]
+[ext_resource type="Script" path="res://scripts/state_machine/states/jumping.gd" id="6_5kqf0"]
+[ext_resource type="Script" path="res://scripts/state_machine/states/running.gd" id="6_htmon"]
+[ext_resource type="Script" path="res://scripts/state_machine/states/falling.gd" id="7_bg1n4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_h5itf"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_hb2t6"]
+font_size = 10
+
+[node name="PlayerCharacter" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_ebyub")
+
+[node name="Icon" type="Sprite2D" parent="."]
+scale = Vector2(0.156, 0.159)
+texture = ExtResource("1_vboyc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_h5itf")
+
+[node name="DebugLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -47.0
+offset_top = -26.0
+offset_right = 45.0
+offset_bottom = -12.0
+grow_horizontal = 2
+text = "State: "
+label_settings = SubResource("LabelSettings_hb2t6")
+horizontal_alignment = 1
+uppercase = true
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("init_state", "character")]
+script = ExtResource("3_ktvyv")
+init_state = NodePath("Idle")
+character = NodePath("..")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("4_isyw2")
+
+[node name="Jumping" type="Node" parent="StateMachine"]
+script = ExtResource("6_5kqf0")
+
+[node name="Running" type="Node" parent="StateMachine"]
+script = ExtResource("6_htmon")
+
+[node name="Falling" type="Node" parent="StateMachine"]
+script = ExtResource("7_bg1n4")

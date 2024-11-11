@@ -1,0 +1,70 @@
+[gd_scene load_steps=10 format=3 uid="uid://coxur0x6cemiu"]
+
+[ext_resource type="Script" path="res://scripts/player_character.gd" id="1_ebyub"]
+[ext_resource type="Texture2D" uid="uid://br486g1k8x0wn" path="res://icon.svg" id="1_vboyc"]
+[ext_resource type="Script" path="res://scripts/state_machine/state_machine.gd" id="3_ktvyv"]
+[ext_resource type="Script" path="res://scripts/state_machine/states/idle_state.gd" id="4_isyw2"]
+[ext_resource type="Script" path="res://scripts/state_machine/states/jump_state.gd" id="6_5kqf0"]
+[ext_resource type="Script" path="res://scripts/state_machine/states/moveh_state.gd" id="6_htmon"]
+[ext_resource type="Script" path="res://scripts/state_machine/states/falling_state.gd" id="7_bg1n4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1df5c"]
+size = Vector2(128.205, 128.205)
+
+[sub_resource type="LabelSettings" id="LabelSettings_hb2t6"]
+font_size = 10
+
+[node name="PlayerCharacter" type="CharacterBody2D"]
+collision_layer = 2
+script = ExtResource("1_ebyub")
+
+[node name="Icon" type="Sprite2D" parent="."]
+scale = Vector2(0.156, 0.159)
+texture = ExtResource("1_vboyc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(0.156, 0.156)
+shape = SubResource("RectangleShape2D_1df5c")
+
+[node name="DebugLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -47.0
+offset_top = -26.0
+offset_right = 45.0
+offset_bottom = -12.0
+grow_horizontal = 2
+text = "State: "
+label_settings = SubResource("LabelSettings_hb2t6")
+horizontal_alignment = 1
+uppercase = true
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("init_state", "character")]
+script = ExtResource("3_ktvyv")
+init_state = NodePath("Idle")
+character = NodePath("..")
+
+[node name="Idle" type="Node" parent="StateMachine" node_paths=PackedStringArray("fall_state", "jump_state", "move_state")]
+script = ExtResource("4_isyw2")
+fall_state = NodePath("../Falling")
+jump_state = NodePath("../Jump")
+move_state = NodePath("../MoveH")
+
+[node name="Jump" type="Node" parent="StateMachine" node_paths=PackedStringArray("fall_state", "idle_state", "move_state")]
+script = ExtResource("6_5kqf0")
+fall_state = NodePath("../Falling")
+idle_state = NodePath("../Idle")
+move_state = NodePath("../MoveH")
+
+[node name="MoveH" type="Node" parent="StateMachine" node_paths=PackedStringArray("fall_state", "idle_state", "jump_state")]
+script = ExtResource("6_htmon")
+fall_state = NodePath("../Falling")
+idle_state = NodePath("../Idle")
+jump_state = NodePath("../Jump")
+
+[node name="Falling" type="Node" parent="StateMachine" node_paths=PackedStringArray("idle_state", "jump_state", "move_state")]
+script = ExtResource("7_bg1n4")
+idle_state = NodePath("../Idle")
+jump_state = NodePath("../Jump")
+move_state = NodePath("../MoveH")
