@@ -1,7 +1,6 @@
-[gd_scene load_steps=35 format=3 uid="uid://coxur0x6cemiu"]
+[gd_scene load_steps=34 format=3 uid="uid://coxur0x6cemiu"]
 
 [ext_resource type="Script" path="res://scripts/player_character.gd" id="1_ebyub"]
-[ext_resource type="Texture2D" uid="uid://br486g1k8x0wn" path="res://icon.svg" id="1_vboyc"]
 [ext_resource type="Texture2D" uid="uid://g6n22d7t0u0w" path="res://assets/Soldier.png" id="2_542uc"]
 [ext_resource type="Script" path="res://scripts/state_machine/state_machine.gd" id="3_ktvyv"]
 [ext_resource type="Script" path="res://scripts/state_machine/states/idle.gd" id="4_isyw2"]
@@ -332,13 +331,7 @@ libraries = {
 "": SubResource("AnimationLibrary_m3efo")
 }
 
-[node name="Icon" type="Sprite2D" parent="."]
-visible = false
-scale = Vector2(0.156, 0.159)
-texture = ExtResource("1_vboyc")
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
 position = Vector2(0, -2)
 shape = SubResource("CapsuleShape2D_o283g")
 
