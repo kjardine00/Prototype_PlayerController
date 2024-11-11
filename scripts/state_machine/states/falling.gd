@@ -2,6 +2,7 @@ extends State
 
 func enter_state(from_state: String, data := {}) -> void:
 	character.debug_label.text = "STATE: Falling"
+	character.animation_player.play("falling")
 
 func physics_update(delta: float) -> void:
 	var input_direciton_x = Input.get_axis("move_left", "move_right")
