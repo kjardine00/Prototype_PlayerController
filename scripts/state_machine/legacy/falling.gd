@@ -1,11 +1,9 @@
 extends State
 
 func enter_state(from_state: String, data := {}) -> void:
-	character.velocity.y += character.jump_velocity
-	character.debug_label.text = "STATE: Jumping"
-	character.animation_player.play("jumping")
-	
-	
+	character.debug_label.text = "STATE: Falling"
+	#character.animation_player.play("falling")
+
 func physics_update(delta: float) -> void:
 	var input_direciton_x = Input.get_axis("move_left", "move_right")
 	
@@ -20,8 +18,10 @@ func physics_update(delta: float) -> void:
 	
 	
 	character.move_and_slide()
-	
-##====================== Change State Logic ======================
-	
-	if character.velocity.y >= 0:
-		finished.emit(FALLING)
+
+	##====================== Change State Logic ======================
+	if character.is_on_floor():
+		if is_equal_approx(input_direciton_x, 0.0):
+			finished.emit(IDLE)
+		else:
+			finished.emit(RUNNING)

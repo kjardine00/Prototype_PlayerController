@@ -3,7 +3,7 @@ extends State
 func enter_state(from_state: String, data := {}) -> void:
 	character.velocity.x = 0.0
 	character.debug_label.text = "STATE: Idle"
-	character.animation_player.play("idle")
+	#character.animation_player.play("idle")
 
 func physics_update(_delta: float) -> void:
 	character.velocity.y += character.gravity * _delta

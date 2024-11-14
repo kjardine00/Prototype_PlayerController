@@ -536,8 +536,9 @@ _data = {
 "running": SubResource("Animation_hitq7")
 }
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qjbkf"]
-size = Vector2(10, 15)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_o283g"]
+radius = 5.0
+height = 18.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_hb2t6"]
 font_size = 10
@@ -549,6 +550,8 @@ script = ExtResource("1_ebyub")
 [node name="PlayerInputStateMachine" type="Node" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("5_s1krx")
 player = NodePath("..")
+
+[node name="MovementStateMachine" type="Node" parent="."]
 
 [node name="Icon" type="Sprite2D" parent="."]
 position = Vector2(-1.49012e-07, -1.5)
@@ -566,8 +569,8 @@ libraries = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -1.5)
-shape = SubResource("RectangleShape2D_qjbkf")
+position = Vector2(0, -2)
+shape = SubResource("CapsuleShape2D_o283g")
 
 [node name="DebugLabel" type="Label" parent="."]
 anchors_preset = 5
